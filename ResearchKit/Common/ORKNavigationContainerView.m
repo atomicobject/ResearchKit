@@ -319,7 +319,13 @@ static const CGFloat shadowHeight = 0.75;
             [_parentStackView addArrangedSubview:subStack];
         }
     }
-    _appTintColor = [[UIApplication sharedApplication].delegate window].tintColor;
+    if (@available(iOS 13.0, *)) {
+        _appTintColor = [self window] .tintColor;
+        // not sure if it's this or [[self window].windowScene windows].firstObject .tintColor;
+    } else {
+        _appTintColor = [[UIApplication sharedApplication].delegate window].tintColor;
+    }
+    
     [self setupContinueButton];
     [self setupCancelButton];
     [self setupSkipButton];
